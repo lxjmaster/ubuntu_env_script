@@ -147,7 +147,7 @@ if [ ! "$(command -v autojump)" ]; then
   echo "autojump not found, installing autojump"
   if [ ! -d "$HOME/autojump" ]; then
     cd "$HOME" || exit 1
-    git clone git://github.com/wting/autojump.git
+    git clone https://github.com/wting/autojump.git
     cd autojump || exit 1
     ./install.py
   else
