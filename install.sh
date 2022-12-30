@@ -43,7 +43,7 @@ install_zsh_plugin()
       if [ -d "$PLUGIN_PATH" ]; then
         echo "$1 existed, pull lasted version ..."
         cd "$PLUGIN_PATH" || exit 1
-        git pull
+        git pull >&2
         cd "$PWD" || exit 1
       else
         echo "installing $1 ..."
@@ -116,7 +116,7 @@ if [ ! -d $ZSH ]; then
   sh $ZSH/tools/install.sh
 else
   cd $ZSH || exit 1
-  git pull
+  git pull >&2
   ZSH=$(sh ./tools/install.sh)
 #  sh $ZSH/tools/install.sh
   cd "$PWD" || exit 1
@@ -157,7 +157,7 @@ if [ ! "$(command -v autojump)" ]; then
     ./install.py
   else
     cd "$HOME/autojump" || exit 1
-    git pull
+    git pull >&2
     ./install.py
   fi
 fi
