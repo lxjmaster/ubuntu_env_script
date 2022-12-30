@@ -5,10 +5,10 @@
 
 export GIT_TERMINAL_PROMPT=1
 
-export PATH=$PATH:/home/master/.local/bin
+export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:/usr/local/go/bin
-export ZSH="/home/master/.oh-my-zsh"
-export ZSH_PLUGINS="/home/master/.oh-my-zsh/plugins"
+export ZSH="$HOME/.oh-my-zsh"
+export ZSH_PLUGINS="$HOME/.oh-my-zsh/plugins"
 
 
 # Set name of the theme to load --- if set to "random", it will
