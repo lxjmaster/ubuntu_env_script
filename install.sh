@@ -107,19 +107,12 @@ else
 fi
 
 # install oh-my-zsh
+echo "installing oh-my-zsh ..."
 if [ ! -d $ZSH ]; then
-  echo "installing oh-my-zsh ..."
-  git clone https://github.com/robbyrussell/oh-my-zsh.git "$ZSH" || {
-    printf "Error: git clone oh-my-zsh failed"
-    exit 1
-  }
-  sh $ZSH/tools/install.sh
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 else
-  cd $ZSH || exit 1
-  git pull
-  ZSH=$(sh ./tools/install.sh)
-#  sh $ZSH/tools/install.sh
-  cd "$PWD" || exit 1
+  rm -rf $ZSH
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
 
 # config .zshrc
