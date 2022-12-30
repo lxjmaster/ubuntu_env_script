@@ -113,9 +113,11 @@ if [ ! -d $ZSH ]; then
     printf "Error: git clone oh-my-zsh failed"
     exit 1
   }
+  sh $ZSH/tools/install.sh
 else
   cd $ZSH || exit 1
   git pull
+  sh $ZSH/tools/install.sh
   cd "$PWD" || exit 1
 fi
 
@@ -147,7 +149,9 @@ if [ ! "$(command -v autojump)" ]; then
   echo "autojump not found, installing autojump"
   if [ ! -d "$HOME/autojump" ]; then
     cd "$HOME" || exit 1
-    git clone https://github.com/wting/autojump.git
+    git clone https://github.com/wting/autojump.git || {
+      printf "Error: git clone autojump failed"
+    }
     cd autojump || exit 1
     ./install.py
   else
@@ -159,7 +163,7 @@ fi
 
 # set default shell to zsh
 if [ "$(command -v zsh)" ]; then
-  chsh -s "$(command -v zsh)"
+  sudo chsh -s "$(command -v zsh)"
   cd "$HOME" || exit 1
   source .zshrc
 fi
