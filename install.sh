@@ -93,7 +93,7 @@ fi
 # config .zshrc
 echo "making zsh config > .zshrc"
 echo "$ZSH_CONFIG_FILE"
-if [ -d "$ZSH_CONFIG_FILE" ]; then
+if [ -f "$ZSH_CONFIG_FILE" ]; then
   echo "moving $ZSH_CONFIG_FILE to $HOME/.zshrc"
   mv "$ZSH_CONFIG_FILE" "$HOME/.zshrc"
 else
