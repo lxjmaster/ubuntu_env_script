@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # init
 #sudo apt update && sudo apt upgrade -y
 
@@ -55,8 +57,6 @@ install_zsh_plugin()
   fi
 }
 
-# Check if the dependent tools are installed
-
 # install curl
 if [ ! "$(command -v curl)" ]; then
   install curl
@@ -81,10 +81,10 @@ fi
 # install oh-my-zsh
 echo "installing oh-my-zsh ..."
 if [ ! -d $ZSH ]; then
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
 else
   rm -rf $ZSH
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
 fi
 
 # install git flow
