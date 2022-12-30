@@ -78,6 +78,15 @@ else
   echo "git is installed ..." >&2
 fi
 
+# install oh-my-zsh
+echo "installing oh-my-zsh ..."
+if [ ! -d $ZSH ]; then
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+else
+  rm -rf $ZSH
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
+
 # install git flow
 if [ ! "$(command -v git-flow)" ]; then
   install git-flow
@@ -104,15 +113,6 @@ if [ ! "$(command -v tmux)" ]; then
   install tmux
 else
   echo "tmux is installed ..." >&2
-fi
-
-# install oh-my-zsh
-echo "installing oh-my-zsh ..."
-if [ ! -d $ZSH ]; then
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-else
-  rm -rf $ZSH
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
 
 # config .zshrc
