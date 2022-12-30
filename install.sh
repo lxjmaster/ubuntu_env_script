@@ -78,6 +78,13 @@ else
   echo "git is installed ..." >&2
 fi
 
+# install zsh
+if [ ! "$(command -v zsh)" ]; then
+  install zsh
+else
+  echo "zsh is installed ..."
+fi
+
 # install oh-my-zsh
 echo "installing oh-my-zsh ..."
 if [ ! -d $ZSH ]; then
@@ -92,13 +99,6 @@ if [ ! "$(command -v git-flow)" ]; then
   install git-flow
 else
   echo "git-flow is installed ..." >&2
-fi
-
-# install zsh
-if [ ! "$(command -v zsh)" ]; then
-  install zsh
-else
-  echo "zsh is installed ..."
 fi
 
 # install fzf
