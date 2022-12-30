@@ -88,10 +88,10 @@ fi
 # install oh-my-zsh
 echo "installing oh-my-zsh ..."
 if [ ! -d $ZSH ]; then
-  sh -c "$(wget https://github.com/lxjmaster/ohmyzsh/blob/master/tools/install.sh -O -)"
+  sh -c "$(curl -fsSL https://github.com/lxjmaster/ohmyzsh/blob/master/tools/install.sh)"
 else
   rm -rf $ZSH
-  sh -c "$(wget https://github.com/lxjmaster/ohmyzsh/blob/master/tools/install.sh -O -)"
+  sh -c "$(curl -fsS https://github.com/lxjmaster/ohmyzsh/blob/master/tools/install.sh)"
 fi
 
 # install git flow
