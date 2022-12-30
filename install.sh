@@ -88,10 +88,10 @@ fi
 # install oh-my-zsh
 echo "installing oh-my-zsh ..."
 if [ ! -d $ZSH ]; then
-  sh -c "$(curl -fsSL https://github.com/lxjmaster/ohmyzsh/blob/master/tools/install.sh)"
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/lxjmaster/ohmyzsh/master/tools/install.sh)"
 else
   rm -rf $ZSH
-  sh -c "$(curl -fsS https://github.com/lxjmaster/ohmyzsh/blob/master/tools/install.sh)"
+  sh -c "$(curl -fsS https://raw.githubusercontent.com/lxjmaster/ohmyzsh/master/tools/install.sh)"
 fi
 
 # install git flow
@@ -147,11 +147,11 @@ if [ ! "$(command -v autojump)" ]; then
       printf "Error: git clone autojump failed"
     }
     cd autojump || exit 1
-    ./install.py
+    sudo ./install.py
   else
     cd "$HOME/autojump" || exit 1
     git pull
-    ./install.py
+    sudo ./install.py
   fi
 fi
 
