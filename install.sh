@@ -157,7 +157,7 @@ fi
 
 # set default shell to zsh
 if [ "$(command -v zsh)" ]; then
-  sudo chsh -s "$(command -v zsh)"
+  chsh -s /bin/zsh
   cd "$HOME" || exit 1
   source .zshrc
 fi
