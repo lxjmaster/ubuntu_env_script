@@ -117,7 +117,8 @@ if [ ! -d $ZSH ]; then
 else
   cd $ZSH || exit 1
   git pull
-  sh $ZSH/tools/install.sh
+  ZSH=$(sh ./tools/install.sh)
+#  sh $ZSH/tools/install.sh
   cd "$PWD" || exit 1
 fi
 
