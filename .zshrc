@@ -119,5 +119,5 @@ zstyle ':fzf-tab:*' switch-group ',' '.'
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 
-# [[ -s /home/master/.autojump/etc/profile.d/autojump.sh ]] && source /home/master/.autojump/etc/profile.d/autojump.sh
-# autoload -U compinit && compinit -u
+[[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]] && source $HOME/.autojump/etc/profile.d/autojump.sh
+autoload -U compinit && compinit -u
