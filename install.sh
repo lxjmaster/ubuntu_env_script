@@ -1,11 +1,26 @@
 # init
 #sudo apt update && sudo apt upgrade -y
 
+PYTHON="$(command -v python)"
+PYTHON3="$(command -v python3)"
 ZSH=~/.oh-my-zsh
 PWD=$(pwd)
 ZSH_PLUGINS="$ZSH/plugins"
 CURRENT_DIR=$(cd "$(dirname "$0")" || exit 1; pwd)
 ZSH_CONFIG_FILE=$CURRENT_DIR/.zshrc
+
+if [ ! "$PYTHON" ]; then
+  echo "Command 'python' not found"
+  if [ ! "$PYTHON3" ]; then
+    echo "Command 'python3' not found, installing python3"
+    sudo apt install python3 -y
+    PYTHON3="$(command -v python3)"
+    sudo link "$PYTHON3" /usr/bin/python
+  else
+    echo "Command 'python3' existed, make link python3 to python"
+    sudo link "$PYTHON3" /usr/bin/python
+  fi
+fi
 
 install()
 {
@@ -77,6 +92,20 @@ else
   echo "zsh is installed ..."
 fi
 
+# install fzf
+if [ ! "$(command -v fzf)" ]; then
+  install fzf
+else
+  echo "fzf is installed ..." >&2
+fi
+
+# install tmux
+if [ ! "$(command -v tmux)" ]; then
+  install tmux
+else
+  echo "tmux is installed ..." >&2
+fi
+
 # install oh-my-zsh
 if [ ! -d $ZSH ]; then
   echo "installing oh-my-zsh ..."
@@ -104,45 +133,38 @@ fi
 # install zsh-syntax-highlighting
 install_zsh_plugin zsh-syntax-highlighting https://github.com/zsh-users/zsh-syntax-highlighting.git
 
-#PLUGIN_PATH=$ZSH_PLUGINS/zsh-syntax-highlighting
-#if [ -d $PLUGIN_PATH ]; then
-#  cd $PLUGIN_PATH || exit 1
-#  git pull
-#  cd "$PWD" || exit 1
-#else
-#  echo "install zsh-syntax-highlighting..."
-#  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $PLUGIN_PATH || {
-#    printf "Error: git clone zsh-syntax-highlighting failed"
-#    exit 1
-#  }
-#fi
-
 # install zsh-autosuggestions
 install_zsh_plugin zsh-autosuggestions https://github.com/zsh-users/zsh-autosuggestions.git
-#PLUGIN_PATH=$ZSH_PLUGINS/autosuggestions
-#if [ -d $PLUGIN_PATH ]; then
-#  cd $PLUGIN_PATH || exit 1
-#  git pull
-#  cd "$PWD" || exit 1
-#else
-#  echo "install zsh-autosuggestions..."
-#  git clone https://github.com/zsh-users/zsh-autosuggestions.git $PLUGIN_PATH || {
-#    printf "Error: git clone zsh-autosuggestions failed"
-#    exit 1
-#  }
-#fi
+
+# install git-open
+install_zsh_plugin git-open https://github.com/paulirish/git-open.git
 
 # install fzf-tab
 install_zsh_plugin fzf-tab https://github.com/Aloxaf/fzf-tab
-#PLUGIN_PATH=$ZSH_PLUGINS/fzf-tab
-#if [ -d $PLUGIN_PATH ]; then
-#  cd $PLUGIN_PATH || exit 1
-#  git pull
-#  cd "$PWD" || exit 1
-#else
-#  echo "install fzf-tab..."
-#  git clone clone https://github.com/Aloxaf/fzf-tab $PLUGIN_PATH || {
-#    printf "Error: git clone zsh-autosuggestions failed"
-#    exit 1
-#  }
-#fi
+
+# install autojump
+if [ ! "$(command -v autojump)" ]; then
+  echo "autojump not found, installing autojump"
+  if [ ! -d "$HOME/autojump" ]; then
+    cd "$HOME" || exit 1
+    git clone git://github.com/wting/autojump.git
+    cd autojump || exit 1
+    ./install.py
+  else
+    cd "$HOME/autojump" || exit 1
+    git pull
+    ./install.py
+  fi
+fi
+
+# set default shell to zsh
+if [ "$(command -v zsh)" ]; then
+  chsh -s "$(command -v zsh)"
+  cd "$HOME" || exit 1
+  source .zshrc
+fi
+
+# set default terminal to tmux
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+  exec tmux
+fi
