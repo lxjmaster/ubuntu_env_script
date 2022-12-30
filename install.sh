@@ -21,6 +21,25 @@ install()
   fi
 }
 
+install_zsh_plugin()
+{
+  if ( ! which "$1" > /dev/null 2>&1 ) && ( ! which "$2" > /dev/null 2>&1 ); then
+      PLUGIN_PATH=$ZSH_PLUGINS/$1
+      if [ -d "$PLUGIN_PATH" ]; then
+        echo "$1 existed, pull lasted version..."
+        cd "$PLUGIN_PATH" || exit 1
+        git pull
+        cd "$PWD" || exit 1
+      else
+        echo "install $1..."
+        git clone "$2" "$PLUGIN_PATH" || {
+          echo "Error: git clone $1 failed"
+          exit 1
+        }
+      fi
+  fi
+}
+
 # Check if the dependent tools are installed
 
 # install curl
@@ -81,30 +100,47 @@ else
 fi
 
 # install zsh-syntax-highlighting
-PLUGIN_PATH=$ZSH_PLUGINS/zsh-syntax-highlighting
-if [ -d $PLUGIN_PATH ]; then
-  cd $PLUGIN_PATH || exit 1
-  git pull
-  cd "$PWD" || exit 1
-else
-  echo "install zsh-syntax-highlighting..."
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $PLUGIN_PATH || {
-    printf "Error: git clone zsh-syntax-highlighting failed"
-    exit 1
-  }
-fi
+install_zsh_plugin zsh-syntax-highlighting https://github.com/zsh-users/zsh-syntax-highlighting.git
+
+#PLUGIN_PATH=$ZSH_PLUGINS/zsh-syntax-highlighting
+#if [ -d $PLUGIN_PATH ]; then
+#  cd $PLUGIN_PATH || exit 1
+#  git pull
+#  cd "$PWD" || exit 1
+#else
+#  echo "install zsh-syntax-highlighting..."
+#  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $PLUGIN_PATH || {
+#    printf "Error: git clone zsh-syntax-highlighting failed"
+#    exit 1
+#  }
+#fi
 
 # install zsh-autosuggestions
-PLUGIN_PATH=$ZSH_PLUGINS/autosuggestions
-if [ -d $PLUGIN_PATH ]; then
-  cd $PLUGIN_PATH || exit 1
-  git pull
-  cd "$PWD" || exit 1
-else
-  echo "install zsh-autosuggestions..."
-  git clone https://github.com/zsh-users/zsh-autosuggestions.git $PLUGIN_PATH || {
-    printf "Error: git clone zsh-autosuggestions failed"
-    exit 1
-  }
-fi
+install_zsh_plugin zsh-autosuggestions https://github.com/zsh-users/zsh-autosuggestions.git
+#PLUGIN_PATH=$ZSH_PLUGINS/autosuggestions
+#if [ -d $PLUGIN_PATH ]; then
+#  cd $PLUGIN_PATH || exit 1
+#  git pull
+#  cd "$PWD" || exit 1
+#else
+#  echo "install zsh-autosuggestions..."
+#  git clone https://github.com/zsh-users/zsh-autosuggestions.git $PLUGIN_PATH || {
+#    printf "Error: git clone zsh-autosuggestions failed"
+#    exit 1
+#  }
+#fi
 
+# install fzf-tab
+install_zsh_plugin fzf-tab https://github.com/Aloxaf/fzf-tab
+#PLUGIN_PATH=$ZSH_PLUGINS/fzf-tab
+#if [ -d $PLUGIN_PATH ]; then
+#  cd $PLUGIN_PATH || exit 1
+#  git pull
+#  cd "$PWD" || exit 1
+#else
+#  echo "install fzf-tab..."
+#  git clone clone https://github.com/Aloxaf/fzf-tab $PLUGIN_PATH || {
+#    printf "Error: git clone zsh-autosuggestions failed"
+#    exit 1
+#  }
+#fi
