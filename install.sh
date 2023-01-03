@@ -238,7 +238,7 @@ clean_up() {
   fi
 }
 
-echo "Some configurations need to be restarted to take effect, Do you want to restart now? [Y/n]"
+printf "Some configurations need to be restarted to take effect, Do you want to restart now? [Y/n] "
 read -r opt
 case $opt in
   y*|Y*|"")
