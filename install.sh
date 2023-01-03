@@ -88,10 +88,10 @@ fi
 # install oh-my-zsh
 echo "installing oh-my-zsh ..."
 if [ ! -d $ZSH ]; then
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended --skip-chsh"
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended"
 else
   rm -rf $ZSH
-  sh -c "$(curl -fsS https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended --skip-chsh"
+  sh -c "$(curl -fsS https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended"
 fi
 
 # install git flow
