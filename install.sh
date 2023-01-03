@@ -156,11 +156,11 @@ install_zsh_plugin fzf-tab https://github.com/Aloxaf/fzf-tab
 #fi
 
 # set default shell to zsh
-if [ "$(command -v zsh)" ]; then
-  chsh -s /bin/zsh
-  cd "$HOME" || exit 1
-  source .zshrc
-fi
+#if [ "$(command -v zsh)" ]; then
+#  chsh -s /bin/zsh
+#  cd "$HOME" || exit 1
+#  source .zshrc
+#fi
 
 # set default terminal to tmux
 #if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
