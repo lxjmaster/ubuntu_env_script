@@ -77,7 +77,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git git-flow fzf-tab zsh-syntax-highlighting zsh-autosuggestions sudo autojump git-open git-prompt command-not-found colored-man-pages vi-mode tmux web-search kubectl)
+plugins=(git git-flow fzf-tab zsh-syntax-highlighting zsh-autosuggestions sudo git-open git-prompt command-not-found colored-man-pages vi-mode tmux web-search kubectl)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -96,15 +96,15 @@ source $ZSH/oh-my-zsh.sh
 # fi
 
 # disable sort when completing `git checkout`
-zstyle ':completion:*:git-checkout:*' sort false
-# # set descriptions format to enable group support
-zstyle ':completion:*:descriptions' format '[%d]'
-# # set list-colors to enable filename colorizing
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-# # preview directory's content with exa when completing cd
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
-# # switch group using `,` and `.`
-zstyle ':fzf-tab:*' switch-group ',' '.'
+# zstyle ':completion:*:git-checkout:*' sort false
+# # # set descriptions format to enable group support
+# zstyle ':completion:*:descriptions' format '[%d]'
+# # # set list-colors to enable filename colorizing
+# zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# # # preview directory's content with exa when completing cd
+# zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+# # # switch group using `,` and `.`
+# zstyle ':fzf-tab:*' switch-group ',' '.'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -119,5 +119,5 @@ zstyle ':fzf-tab:*' switch-group ',' '.'
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 
-[[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]] && source $HOME/.autojump/etc/profile.d/autojump.sh
-autoload -U compinit && compinit -u
+# [[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]] && source $HOME/.autojump/etc/profile.d/autojump.sh
+# autoload -U compinit && compinit -u

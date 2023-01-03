@@ -88,10 +88,10 @@ fi
 # install oh-my-zsh
 echo "installing oh-my-zsh ..."
 if [ ! -d $ZSH ]; then
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/lxjmaster/ohmyzsh/master/tools/install.sh) --unattended"
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended --skip-chsh"
 else
   rm -rf $ZSH
-  sh -c "$(curl -fsS https://raw.githubusercontent.com/lxjmaster/ohmyzsh/master/tools/install.sh) --unattended"
+  sh -c "$(curl -fsS https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended --skip-chsh"
 fi
 
 # install git flow
@@ -139,21 +139,21 @@ install_zsh_plugin git-open https://github.com/paulirish/git-open.git
 install_zsh_plugin fzf-tab https://github.com/Aloxaf/fzf-tab
 
 # install autojump
-if [ ! "$(command -v autojump)" ]; then
-  echo "autojump not found, installing autojump"
-  if [ ! -d "$HOME/autojump" ]; then
-    cd "$HOME" || exit 1
-    git clone https://github.com/wting/autojump.git || {
-      printf "Error: git clone autojump failed"
-    }
-    cd autojump || exit 1
-    sudo ./install.py
-  else
-    cd "$HOME/autojump" || exit 1
-    git pull
-    sudo ./install.py
-  fi
-fi
+#if [ ! "$(command -v autojump)" ]; then
+#  echo "autojump not found, installing autojump"
+#  if [ ! -d "$HOME/autojump" ]; then
+#    cd "$HOME" || exit 1
+#    git clone https://github.com/wting/autojump.git || {
+#      printf "Error: git clone autojump failed"
+#    }
+#    cd autojump || exit 1
+#    sudo ./install.py
+#  else
+#    cd "$HOME/autojump" || exit 1
+#    git pull
+#    sudo ./install.py
+#  fi
+#fi
 
 # set default shell to zsh
 if [ "$(command -v zsh)" ]; then
@@ -163,6 +163,6 @@ if [ "$(command -v zsh)" ]; then
 fi
 
 # set default terminal to tmux
-if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-  exec tmux
-fi
+#if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+#  exec tmux
+#fi
