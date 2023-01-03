@@ -240,12 +240,14 @@ clean_up() {
 
 clean_up
 
-printf "Some configurations need to be restarted to take effect, Do you want to restart now? [Y/n] "
-read -r opt
-case $opt in
-  y*|Y*|"")
-  sudo reboot;;
-  n*|N*) echo "Please restart manually to take effect";;
-  *) echo "Invalid choice. Please restart manually to take effect";;
-esac
+exec zsh -l
+
+#printf "Some configurations need to be restarted to take effect, Do you want to restart now? [Y/n] "
+#read -r opt
+#case $opt in
+#  y*|Y*|"")
+#  sudo reboot;;
+#  n*|N*) echo "Please restart manually to take effect";;
+#  *) echo "Invalid choice. Please restart manually to take effect";;
+#esac
 
