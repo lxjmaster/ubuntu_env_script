@@ -166,7 +166,7 @@ setup_shell() {
     return
   fi
 
-  if ! command_exists chsh; then
+  if [ ! "$(command -v chsh)" ]; then
     cat <<EOF
 Command chsh not found
 EOF
@@ -224,4 +224,4 @@ setup_shell
 #  exec tmux
 #fi
 
-sudo reboot
+#sudo reboot
