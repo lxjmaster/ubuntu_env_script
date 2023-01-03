@@ -6,7 +6,6 @@
 export GIT_TERMINAL_PROMPT=1
 
 export PATH=$PATH:$HOME/.local/bin
-export PATH=$PATH:/usr/local/go/bin
 export ZSH="$HOME/.oh-my-zsh"
 export ZSH_PLUGINS="$HOME/.oh-my-zsh/plugins"
 
