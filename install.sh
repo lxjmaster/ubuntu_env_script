@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# init
-#sudo apt update && sudo apt upgrade -y
+# sudo update
+sudo apt update && sudo apt upgrade -y
 
 PYTHON="$(command -v python)"
 PYTHON3="$(command -v python3)"
@@ -223,8 +223,27 @@ fi
 setup_shell
 
 # set default terminal to tmux
-if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-  exec tmux
-fi
+#if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+#  exec tmux
+#fi
 
-#sudo reboot
+clean_up() {
+  echo "Cleaning up................."
+  if [ -d "$HOME/autojump" ]; then
+    sudo rm -rf "$HOME/autojump"
+  fi
+
+  if [ "$(command -v apt)" ]; then
+    sudo apt autoremove
+  fi
+}
+
+echo "Some configurations need to be restarted to take effect, Do you want to restart now? [Y/n]"
+read -r opt
+case $opt in
+  y*|Y*|"")
+  sudo reboot;;
+  n*|N*) echo "Please restart manually to take effect";;
+  *) echo "Invalid choice. Please restart manually to take effect";;
+esac
+
