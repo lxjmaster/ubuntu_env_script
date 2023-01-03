@@ -90,8 +90,12 @@ echo "installing oh-my-zsh ..."
 if [ ! -d $ZSH ]; then
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended"
 else
-  rm -rf $ZSH
-  sh -c "$(curl -fsS https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended"
+#  rm -rf $ZSH
+#  sh -c "$(curl -fsS https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended"
+  cd $ZSH || exit 1
+  git pull || {
+    echo "Error: git clone oh-my-zsh failed"
+  }
 fi
 
 # install git flow
@@ -116,14 +120,16 @@ else
 fi
 
 # config .zshrc
-echo "making zsh config > .zshrc"
-echo "$ZSH_CONFIG_FILE"
+echo "making zsh config > .zshrc ..."
 if [ -f "$ZSH_CONFIG_FILE" ]; then
   echo "moving $ZSH_CONFIG_FILE to $HOME/.zshrc"
   mv "$ZSH_CONFIG_FILE" "$HOME/.zshrc"
 else
-  echo "coping zshrc-template > .zshrc"
-  cp "$ZSH/templates/zshrc.zsh-template" "$HOME/.zshrc"
+  echo "coping zshrc-template > .zshrc ..."
+  cp "$ZSH/templates/zshrc.zsh-template" "$HOME/.zshrc" || {
+    echo "copy zshrc-template failed..."
+    exit 1
+  }
 fi
 
 # install zsh-syntax-highlighting
@@ -166,3 +172,5 @@ install_zsh_plugin fzf-tab https://github.com/Aloxaf/fzf-tab
 #if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
 #  exec tmux
 #fi
+
+sudo reboot
