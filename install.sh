@@ -161,12 +161,63 @@ install_zsh_plugin fzf-tab https://github.com/Aloxaf/fzf-tab
 #  fi
 #fi
 
+setup_shell() {
+  if [ "$(basename -- "$SHELL")" = "zsh" ]; then
+    return
+  fi
+
+  if ! command_exists chsh; then
+    cat <<EOF
+Command chsh not found
+EOF
+    return
+  fi
+
+  # Check if we're running on Termux
+  case "$PREFIX" in
+    *com.termux*) termux=true; zsh=zsh ;;
+    *) termux=false ;;
+  esac
+
+  if [ "$termux" != true ]; then
+    # Test for the right location of the "shells" file
+    if [ -f /etc/shells ]; then
+      shells_file=/etc/shells
+    elif [ -f /usr/share/defaults/etc/shells ]; then # Solus OS
+      shells_file=/usr/share/defaults/etc/shells
+    else
+      echo "could not find /etc/shells file. Change your default shell manually."
+      return
+    fi
+
+    # Get the path to the right zsh binary
+    # 1. Use the most preceding one based on $PATH, then check that it's in the shells file
+    # 2. If that fails, get a zsh path from the shells file, then check it actually exists
+    if ! zsh=$(command -v zsh) || ! grep -qx "$zsh" "$shells_file"; then
+      if ! zsh=$(grep '^/.*/zsh$' "$shells_file" | tail -n 1) || [ ! -f "$zsh" ]; then
+        echo "no zsh binary found or not present in '$shells_file'"
+        echo "change your default shell manually."
+        return
+      fi
+    fi
+
+    echo "Changing your shell to $zsh..."
+    chsh -s "$zsh" "$USER"
+
+    # Check if the shell change was successful
+      if [ $? -ne 0 ]; then
+        echo "chsh command unsuccessful. Change your default shell manually."
+      else
+        export SHELL="$zsh"
+        echo "Shell successfully changed to '$zsh'."
+      fi
+
+      echo
+  fi
+}
+
 # set default shell to zsh
-#if [ "$(command -v zsh)" ]; then
-#  chsh -s /bin/zsh
-#  cd "$HOME" || exit 1
-#  source .zshrc
-#fi
+setup_shell
 
 # set default terminal to tmux
 #if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
