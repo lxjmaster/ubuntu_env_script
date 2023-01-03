@@ -119,19 +119,6 @@ else
   echo "tmux is installed ..." >&2
 fi
 
-# config .zshrc
-echo "making zsh config > .zshrc ..."
-if [ -f "$ZSH_CONFIG_FILE" ]; then
-  echo "moving $ZSH_CONFIG_FILE to $HOME/.zshrc"
-  mv "$ZSH_CONFIG_FILE" "$HOME/.zshrc"
-else
-  echo "coping zshrc-template > .zshrc ..."
-  cp "$ZSH/templates/zshrc.zsh-template" "$HOME/.zshrc" || {
-    echo "copy zshrc-template failed..."
-    exit 1
-  }
-fi
-
 # install zsh-syntax-highlighting
 install_zsh_plugin zsh-syntax-highlighting https://github.com/zsh-users/zsh-syntax-highlighting.git
 
@@ -145,21 +132,23 @@ install_zsh_plugin git-open https://github.com/paulirish/git-open.git
 install_zsh_plugin fzf-tab https://github.com/Aloxaf/fzf-tab
 
 # install autojump
-#if [ ! "$(command -v autojump)" ]; then
-#  echo "autojump not found, installing autojump"
-#  if [ ! -d "$HOME/autojump" ]; then
-#    cd "$HOME" || exit 1
-#    git clone https://github.com/wting/autojump.git || {
-#      printf "Error: git clone autojump failed"
-#    }
-#    cd autojump || exit 1
-#    sudo ./install.py
-#  else
-#    cd "$HOME/autojump" || exit 1
-#    git pull
-#    sudo ./install.py
-#  fi
-#fi
+if [ ! "$(command -v autojump)" ]; then
+  echo "autojump not found, installing autojump"
+  if install autojump; then
+    if [ ! -d "$HOME/autojump" ]; then
+      cd "$HOME" || exit 1
+      git clone https://github.com/wting/autojump.git || {
+        printf "Error: git clone autojump failed"
+      }
+      cd autojump || exit 1
+      ./install.py
+    else
+      cd "$HOME/autojump" || exit 1
+      git pull
+      ./install.py
+    fi
+  fi
+fi
 
 setup_shell() {
   if [ "$(basename -- "$SHELL")" = "zsh" ]; then
@@ -202,19 +191,32 @@ EOF
     fi
 
     echo "Changing your shell to $zsh..."
-    chsh -s "$zsh" "$USER"
+    sudo chsh -s "$zsh" "$USER"
 
     # Check if the shell change was successful
-      if [ $? -ne 0 ]; then
-        echo "chsh command unsuccessful. Change your default shell manually."
-      else
-        export SHELL="$zsh"
-        echo "Shell successfully changed to '$zsh'."
-      fi
+    if [ $? -ne 0 ]; then
+      echo "chsh command unsuccessful. Change your default shell manually."
+    else
+      export SHELL="$zsh"
+      echo "Shell successfully changed to '$zsh'."
+    fi
 
-      echo
+    echo
   fi
 }
+
+# config .zshrc
+echo "making zsh config > .zshrc ..."
+if [ -f "$ZSH_CONFIG_FILE" ]; then
+  echo "moving $ZSH_CONFIG_FILE to $HOME/.zshrc"
+  mv "$ZSH_CONFIG_FILE" "$HOME/.zshrc"
+else
+  echo "coping zshrc-template > .zshrc ..."
+  cp "$ZSH/templates/zshrc.zsh-template" "$HOME/.zshrc" || {
+    echo "copy zshrc-template failed..."
+    exit 1
+  }
+fi
 
 # set default shell to zsh
 setup_shell
