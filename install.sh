@@ -134,7 +134,8 @@ install_zsh_plugin fzf-tab https://github.com/Aloxaf/fzf-tab
 # install autojump
 if [ ! "$(command -v autojump)" ]; then
   echo "autojump not found, installing autojump"
-  if install autojump; then
+  install autojump
+  if [ $? -ne 0 ]; then
     if [ ! -d "$HOME/autojump" ]; then
       cd "$HOME" || exit 1
       git clone https://github.com/wting/autojump.git || {
